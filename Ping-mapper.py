@@ -32,9 +32,9 @@ try:
 except:
     print('error')
 ports = int(input("[*] Enter How Many Ports You Want To Scan: "))
-if ',' in target:
+'''if ',' in target:
     print('[*] Scanning Multiple Targets')
     for ip_addr in target.split(','):
-        scan(ip_addr.strip(' '), ports)
+        scan(ip_addr.strip(' '), ports)'''
 else:
     scan(target, ports)
