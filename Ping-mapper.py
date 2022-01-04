@@ -33,8 +33,6 @@ Ip = input("Enter the ip address :")
 check(Ip)
 
 
-except:
-    print('error')
 ports = int(input("[*] Enter How Many Ports You Want To Scan: "))
 '''if ',' in target:
     print('[*] Scanning Multiple Targets')
