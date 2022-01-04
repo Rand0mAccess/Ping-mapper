@@ -18,17 +18,21 @@ def scan_port(ipaddress, port):
         pass
 
 
-try:
-    while True:
-        target = input(termcolor.colored("[*] Enter Targets To Scan (split them by ,): ", 'red'))
-        octet_ip = target.split(".")
-        int_octet_ip = [int(i) for i in octet_ip]
-        if len(int_octet_ip) == 4:
-            print('ok')
-            break
-        else:
-            print('Please enter the valid ip')
-            continue
+# Python program to validate an Ip address
+import re
+
+regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
+
+def check(Ip):
+	if(re.search(regex, Ip)):
+		print("Valid Ip address")
+	else:
+		print("Invalid Ip address")
+	
+Ip = input("Enter the ip address :")
+check(Ip)
+
+
 except:
     print('error')
 ports = int(input("[*] Enter How Many Ports You Want To Scan: "))
