@@ -1,42 +1,71 @@
-import socket
 import termcolor
-
-
-def scan(target, ports):
-    print('\n' + termcolor.colored((" Starting Scan For"), 'green') + str(target))
-    for port in range(1, ports):
-        scan_port(target, port)
-
-
-def scan_port(ipaddress, port):
-    try:
-        sock = socket.socket()
-        sock.connect((ipaddress, port))
-        print("[+] Port Opened " + str(port))
-        sock.close()
-    except:
-        pass
-
-
-# Python program to validate an Ip address
 import re
+import os
+
+
+
+print("""\
+    
+    
+██████╗ ██╗███╗   ██╗ ██████╗     ███╗   ███╗ █████╗ ██████╗ ██████╗ ███████╗██████╗ 
+██╔══██╗██║████╗  ██║██╔════╝     ████╗ ████║██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗
+██████╔╝██║██╔██╗ ██║██║  ███╗    ██╔████╔██║███████║██████╔╝██████╔╝█████╗  ██████╔╝
+██╔═══╝ ██║██║╚██╗██║██║   ██║    ██║╚██╔╝██║██╔══██║██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██╗
+██║     ██║██║ ╚████║╚██████╔╝    ██║ ╚═╝ ██║██║  ██║██║     ██║     ███████╗██║  ██║
+╚═╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝     ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝
+                                                                                       """)
+                                                                                       
+
+# Validating IP
 
 regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
 
-def check(Ip):
-	if(re.search(regex, Ip)):
-		print("Valid Ip address")
-	else:
-		print("Invalid Ip address")
-	
-Ip = input("Enter the ip address :")
-check(Ip)
+try:
+    while True:
+        target = input("[*] Enter Targets IP To Scan : ")
+        if (re.search(regex, target)):
+            lol = "ping -c1 %s > raw.txt"%(target)
+            os.system(lol)
+            break
+        else:
+            print('Please enter the valid ip')
+            continue
+except:
+    print('error')	 
 
 
-ports = int(input("[*] Enter How Many Ports You Want To Scan: "))
-'''if ',' in target:
-    print('[*] Scanning Multiple Targets')
-    for ip_addr in target.split(','):
-        scan(ip_addr.strip(' '), ports)'''
-else:
-    scan(target, ports)
+
+
+#checking for OS with ttl value
+
+def OS(file):
+    f = open(file, 'r')
+    for line in f:
+        if 'ttl=128' in line:
+            print('windows server')
+        elif 'ttl=255' in line:
+            print('It is a Linux kernel 2.4')
+        elif 'ttl=64' in line:
+            print('It is a Linux kernel 4.10 ')
+
+OS('raw.txt')
+
+print('Now have some patience while Ping mapper is mapping the IP')
+# Doing the nmap scan
+
+def map(file):
+    n = open(file, 'r')
+    for word in n:
+        if 'up' in word:
+            nmap = "nmap -sC -sV -p- --script=vuln %s > results.txt"%(target)
+            os.system(nmap)
+        else:
+            pass    
+
+map('raw.txt')
+	 
+os.system('rm -r raw.txt')		
+
+print('JOB DONE BOSS!!!')
+
+
