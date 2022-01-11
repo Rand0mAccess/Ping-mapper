@@ -53,16 +53,19 @@ OS('raw.txt')
 print('Now have some patience while Ping mapper is mapping the IP')
 # Doing the nmap scan
 
+
 def map(file):
     n = open(file, 'r')
     for word in n:
-        if 'up' in word:
+        if '1 packets transmitted' in word:
             nmap = "nmap -sC -sV -p- --script=vuln %s > results.txt"%(target)
             os.system(nmap)
         else:
             pass    
 
 map('raw.txt')
+
+
 	 
 os.system('rm -r raw.txt')		
 
